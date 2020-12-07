@@ -4,7 +4,7 @@ import tkinter as tk
 
 
 
-class SignUp(tk.Frame):
+class SignUpFrame(tk.Frame):
     ''' Sign up to main window. '''
 
     def __init__(self, controller):
