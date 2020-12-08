@@ -26,7 +26,8 @@ class RegistrationWindow(tk.Tk):
     # Window Attributes
     def win_attributes(self):
         self.title('Registration')
-        self.center_window('300x300')
+        self.resizable(width=False, height=False)
+        self.center_window('250x250')
 
 
     # Place window of <size> in middle of screen
