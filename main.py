@@ -2,7 +2,8 @@
 
 # Imports
 import tkinter as tk
-
+from signUp import SignUpFrame
+from login import LoginFrame
 
 
 class RegistrationWindow(tk.Tk):
@@ -13,10 +14,20 @@ class RegistrationWindow(tk.Tk):
         super().__init__()
         self.win_attributes()
     
+        #Adding space to window for frame
+        self.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
+        
+        #Frames <dictionary> container
+        self.frames = {}
+        self.frames[SignUpFrame] = SignUpFrame(self)
+        self.frames[LoginFrame] = LoginFrame(self)
+        
     # Window Attributes
     def win_attributes(self):
         self.title('Registration')
         self.center_window('300x300')
+
 
     # Place window of <size> in middle of screen
     def center_window(self, size):
@@ -29,16 +40,25 @@ class RegistrationWindow(tk.Tk):
 
         self.geometry("{0}+{1}+{2}".format(size, win_x, win_y))
         
+        
     # Run window
     def run_window(self):
-        self.mainloop()
+        frame = self.frames[SignUpFrame]
+        frame.tkraise()
+        
 
-    # Exit window
-    def exit_window(self):
-        self.quit()
+    # Show different frame on window
+    def change_frame(self, newFrame):
+        frame = self.frames[newFrame]
+        frame.tkraise()
 
     # Resize window
     def resize_window(self, newSize):
         self.center_window(newSize)
 
 
+
+app = RegistrationWindow()
+
+app.run_window()
+app.mainloop()
