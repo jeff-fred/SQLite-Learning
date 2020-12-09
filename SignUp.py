@@ -1,8 +1,10 @@
 ''' Sign-Up Frame '''
 
 import tkinter as tk
+import sqlite3
 import funcs
 import login
+import data_management as d_m
 
 class SignUpFrame(tk.Frame):
     ''' Sign up to main window. '''
@@ -96,6 +98,4 @@ class SignUpFrame(tk.Frame):
             text='Login',
             command=lambda: self.controller.change_frame(login.LoginFrame)
         ).grid(row=5, column=2)
-
-
 

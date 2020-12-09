@@ -1,3 +1,6 @@
+import sqlite3
+import data_management as d_m
+
 
 # Generate grid on to frame
 def generate_frame_grid(frame, totalRows, totalColumns):
@@ -10,3 +13,5 @@ def generate_frame_grid(frame, totalRows, totalColumns):
     while columns < totalColumns:
         frame.columnconfigure(columns, weight=1)
         columns += 1
+
+
