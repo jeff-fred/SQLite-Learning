@@ -1,6 +1,8 @@
 ''' Login Frame '''
 
 import tkinter as tk 
+import data_management as dm
+from tkinter import messagebox
 import funcs
 import signUp
 
@@ -61,7 +63,8 @@ class LoginFrame(tk.Frame):
 
         #Password Entry
         self.passwordEntry.config(
-            width=15
+            width=15,
+            show='*'
         )
         self.passwordEntry.grid(row=2, column=1, columnspan=2)
 
@@ -73,6 +76,7 @@ class LoginFrame(tk.Frame):
         tk.Button(
             self,
             text='Login',
+            command=lambda: self.login_user()
         ).grid(row=3, columnspan=3)
         
         tk.Button(
@@ -82,3 +86,25 @@ class LoginFrame(tk.Frame):
                 self.controller.change_frame(signUp.SignUpFrame),
                 funcs.clear_entries(entries)]
         ).grid(row=4, column=2)
+
+
+    # Login if username & password matches
+    def login_user(self):
+        username = self.usernameEntry.get()
+        password = self.passwordEntry.get()
+
+        if dm.search_by_name(username):
+            with dm.connection:
+                dm.cursor.execute(
+                    '''
+                    SELECT Password FROM Users WHERE Username=?
+                    ''', (username,))
+                truePass = dm.cursor.fetchone()[0]
+
+                if truePass == password:
+                    messagebox.showinfo('Success!', 'You are now logged in!')
+                else:
+                    messagebox.showinfo("ERROR", 'Wrong Password. Try Again')
+        
+        else:
+            funcs.error_messagebox('Invalid username.')
