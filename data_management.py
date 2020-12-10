@@ -72,4 +72,19 @@ def create_new_id():
             
     return newId
 
-    
+
+# Search the database for exact username
+def search_by_name(name):
+    with connection:
+        cursor.execute(
+            '''
+            SELECT Username FROM Users
+            ''')
+        results = [i[0] for i in cursor.fetchall()]
+
+    if name in results:
+        return True
+    else:
+        return False
+
+display_database()

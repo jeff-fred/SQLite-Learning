@@ -1,4 +1,5 @@
 import sqlite3
+from tkinter import messagebox
 import data_management as d_m
 
 
@@ -19,5 +20,10 @@ def generate_frame_grid(frame, totalRows, totalColumns):
 def clear_entries(entries):
     for entry in entries:
         entry.delete(0, "end")
+
+# Error message box
+def error_messagebox(message):
+    messagebox.showerror("Error", message)
+
     
     

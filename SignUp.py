@@ -1,6 +1,8 @@
 ''' Sign-Up Frame '''
 
+import data_management as dm
 import tkinter as tk
+from tkinter import messagebox
 import funcs
 import login
 
@@ -22,6 +24,13 @@ class SignUpFrame(tk.Frame):
         self.passwordEntry = tk.Entry(self)
         self.passwordConfirmationEntry = tk.Entry(self)
         self.frame_setup()
+
+        self.entries = [
+            self.usernameEntry,
+            self.passwordEntry,
+            self.passwordConfirmationEntry
+        ]
+
 
     
     # Set up all frame attributes
@@ -92,6 +101,7 @@ class SignUpFrame(tk.Frame):
         tk.Button(
             self,
             text='Sign Up',
+            command= lambda: self.create_user()
         ).grid(row=4, columnspan=3)
         
         tk.Button(
@@ -102,3 +112,47 @@ class SignUpFrame(tk.Frame):
                 funcs.clear_entries(entries)]
         ).grid(row=5, column=2)
 
+
+    # Add input to new user
+    def create_user(self):
+        newId = dm.create_new_id()
+        username = self.usernameEntry.get()
+        password = self.passwordEntry.get()
+
+        if self.username_validation(username):
+            dm.add_to_database(newId, username, password)
+            funcs.clear_entries(self.entries)
+            messagebox.showinfo('Success!', 'New user has been created.')
+
+
+    # Validate credentials
+    def credential_validation(self):
+        valid = True
+        nonChars = [' ', '~', '+', '^', '*', '(', ')', ':']
+
+        username = self.usernameEntry.get()
+        password = self.passwordEntry.get()
+        passwordConfirmation = self.passwordConfirmationEntry.get()
+
+        for i in nonChars:
+            if (i not in username) and (password == passwordConfirmation):
+                valid = True
+            else:
+                funcs.error_messagebox('''
+                Invalid username or password \n 
+                P.S: Don\'t use ~ , + , ^ , * , : , ( or ) ''')
+                funcs.clear_entries(self.entries)
+                valid = False
+                break
+        
+        return valid
+    
+
+    # Username validation
+    def username_validation(self, username):
+        if self.credential_validation() and not dm.search_by_name(username):
+            return True
+        else:
+            funcs.clear_entries(self.entries)
+            funcs.error_messagebox('Username already in use.')
+            return False
