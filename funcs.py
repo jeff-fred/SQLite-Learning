@@ -15,3 +15,9 @@ def generate_frame_grid(frame, totalRows, totalColumns):
         columns += 1
 
 
+# Clear all [entries] in Frame
+def clear_entries(entries):
+    for entry in entries:
+        entry.delete(0, "end")
+    
+    

@@ -58,8 +58,7 @@ class RegistrationWindow(tk.Tk):
         self.center_window(newSize)
 
 
-
-app = RegistrationWindow()
-
-app.run_window()
-app.mainloop()
+if __name__ == '__main__':
+    app = RegistrationWindow()
+    app.run_window()
+    app.mainloop()

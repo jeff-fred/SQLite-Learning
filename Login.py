@@ -18,8 +18,8 @@ class LoginFrame(tk.Frame):
         funcs.generate_frame_grid(self, 5, 3)
 
         # widget setup
-        self.usernameEntry = tk.StringVar()
-        self.passwordEntry = tk.StringVar()
+        self.usernameEntry = tk.Entry(self)
+        self.passwordEntry = tk.Entry(self)
         self.frame_setup()
 
     # Set up whole frame
@@ -54,18 +54,20 @@ class LoginFrame(tk.Frame):
         # ==== ENTRIES ====
 
         #Username Entry
-        tk.Entry(
-            self,
-            textvariable=self.usernameEntry,
+        self.usernameEntry.config(
             width=15
-        ).grid(row=1, column=1, columnspan=2)
+        )
+        self.usernameEntry.grid(row=1, column=1, columnspan=2)
 
         #Password Entry
-        tk.Entry(
-            self,
-            textvariable=self.passwordEntry,
+        self.passwordEntry.config(
             width=15
-        ).grid(row=2, column=1, columnspan=2)
+        )
+        self.passwordEntry.grid(row=2, column=1, columnspan=2)
+
+        entries = [
+            self.usernameEntry,
+            self.passwordEntry]
 
         # ==== BUTTONS ====
         tk.Button(
@@ -76,5 +78,7 @@ class LoginFrame(tk.Frame):
         tk.Button(
             self,
             text='Sign Up',
-            command=lambda: self.controller.change_frame(signUp.SignUpFrame)
+            command=lambda: [
+                self.controller.change_frame(signUp.SignUpFrame),
+                funcs.clear_entries(entries)]
         ).grid(row=4, column=2)
